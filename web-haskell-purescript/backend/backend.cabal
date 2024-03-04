@@ -10,6 +10,7 @@ common defaults
 common deps
   build-depends:
       base
+    , lcolonq-prelude
     , aeson
     , base64
     , binary
@@ -31,11 +32,11 @@ common deps
     , network
     , req
     , safe-exceptions
+    , scotty
     , text
     , time
     , tomland
     , transformers
-    , twain
     , unordered-containers
     , vector
     , wai

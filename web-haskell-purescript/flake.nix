@@ -4,6 +4,7 @@
     purs-nix.url = "github:purs-nix/purs-nix/ps-0.15";
     ps-tools.follows = "purs-nix/ps-tools";
     lcolonq-prelude.url = "github:lcolonq/prelude";
+    lcolonq-prelude.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, ... }@inputs:
@@ -12,10 +13,15 @@
       pkgs = nixpkgs.legacyPackages.${system};
       ps-tools = inputs.ps-tools.legacyPackages.${system};
       purs-nix = inputs.purs-nix { inherit system; };
-      lcolonq-prelude = inputs.lcolonq-prelude.legacyPackages.${system};
+      lcolonq-prelude = inputs.lcolonq-prelude.packages.${system}.default;
 
       haskellOverrides = self: super: {
         inherit lcolonq-prelude;
+        scotty = self.callHackageDirect {
+          pkg = "scotty";
+          ver = "0.21";
+          sha256 = "sha256-coeQZJT7COSmoyA1eiykoMFv3+xNnxkF5tX4mlFcd84=";
+        } {};
         backend = self.callCabal2nix "backend" ./backend {};
       };
       haskellPackages = pkgs.haskell.packages.ghc94.override {
