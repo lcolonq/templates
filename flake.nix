@@ -5,6 +5,10 @@
     let
     in {
       templates = {
+        shell = {
+          description = "LCOLONQ development shell";
+          path = "${./shell}";
+        };
         web-haskell-purescript = {
           description = "LCOLONQ web project - Haskell + Purescript";
           path = "${./web-haskell-purescript}";
