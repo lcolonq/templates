@@ -3,7 +3,7 @@ mod game;
 #[cfg(not(target_arch = "wasm32"))]
 #[tokio::main]
 pub async fn main() {
-    teleia::run("game", game::Game::new).await;
+    teleia::run("game", 240, 160, teleia::Options::empty(), game::Game::new).await;
 }
 
 #[cfg(target_arch = "wasm32")]

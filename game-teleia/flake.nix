@@ -11,7 +11,6 @@
       url = "github:oxalica/rust-overlay";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
       };
     };
   };
@@ -85,12 +84,31 @@
           packages = [
             pkgs.trunk
             pkgs.rust-analyzer
-            pkgs.pkg-config
-            pkgs.openssl.dev
-            pkgs.SDL2
             pkgs.glxinfo
             pkgs.alsa-lib
+            pkgs.cmake
+            pkgs.pkg-config
+            pkgs.openssl.dev
+            pkgs.glfw
+            pkgs.xorg.libX11 
+            pkgs.xorg.libXcursor 
+            pkgs.xorg.libXi 
+            pkgs.xorg.libXrandr
+            pkgs.xorg.libXinerama
+            pkgs.libxkbcommon 
+            pkgs.xorg.libxcb  
+            pkgs.libglvnd
           ];
+          LD_LIBRARY_PATH = "$LD_LIBRARY_PATH:${
+            pkgs.lib.makeLibraryPath [
+              pkgs.xorg.libX11 
+              pkgs.xorg.libXcursor 
+              pkgs.xorg.libXi 
+              pkgs.libxkbcommon 
+              pkgs.xorg.libxcb  
+              pkgs.libglvnd
+            ]
+          }";
         };
       });
 }

@@ -1,5 +1,5 @@
 [package]
-name = "game_web"
+name = "game_lib"
 version = "0.1.0"
 authors = ["LLLL Colonq <llll@colonq.computer>"]
 edition = "2021"
