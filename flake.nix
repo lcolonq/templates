@@ -17,6 +17,10 @@
           description = "LCOLONQ game project - Rust";
           path = "${./game-teleia}";
         };
+        c = {
+          description = "LCOLONQ project - C";
+          path = "${./c}";
+        };
       };
     };
 }

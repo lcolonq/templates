@@ -19,7 +19,7 @@ codegen-units = 1
 opt-level = 2
 
 [dependencies]
-teleia = { path = "../teleia" } # engine
+teleia = { git = "https://github.com/lcolonq/teleia" } # engine
 glam = "*" # linear algebra
 bitflags = "*" # C-style bitwise flags
 rand = "*" # rng
@@ -28,8 +28,4 @@ lazy_static = "*" # global constants
 strum = {version = "*", features = ["derive"]} # utility macros for enums
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
-wasm-bindgen = "*" # wasm bindings
-wasm-bindgen-futures = "*" # interface with async javascript
-
-[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
-tokio = { version = "*", features = ["full"] }
+wasm-bindgen = "=0.2.100" # wasm bindings
