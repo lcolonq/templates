@@ -8,9 +8,10 @@
     inputs.flake-utils.lib.eachDefaultSystem
       (system:
         let
+          nm = "foo";
           pkgs = nixpkgs.legacyPackages.${system};
-          foo = pkgs.pkgsMusl.stdenv.mkDerivation {
-            pname = "foo";
+          p = pkgs.pkgsMusl.stdenv.mkDerivation {
+            pname = nm;
             version = "git";
             src = ./.;
             hardeningDisable = ["all"];
@@ -20,8 +21,8 @@
           };
         in {
           packages = {
-            inherit foo;
-            default = foo;
+            "${nm}" = p;
+            default = p;
           };
           devShells.default = pkgs.mkShell {
             hardeningDisable = ["all"];
