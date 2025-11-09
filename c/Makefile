@@ -1,4 +1,4 @@
-SRCS := src/main.c
+SRCS :=
 OBJECTS := $(SRCS:src/%.c=build/%.o)
 HEADERS := $(wildcard src/*.h)
 EXE := foo
@@ -8,8 +8,10 @@ CC ?= gcc
 AR ?= ar
 CHK_SOURCES ?= $(SRCS)
 CPPFLAGS ?= -MMD -MP
-CFLAGS ?= --std=c89 -g -Ideps/ -Isrc/ -Wall -Wextra -Wpedantic -Wconversion -Wformat-security -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-prototypes -Wnull-dereference -Wfloat-equal -Wundef -Wpointer-arith -Wbad-function-cast -Wlogical-op -Wmissing-braces -Wcast-align -Wstrict-overflow=5 -ftrapv
-LDFLAGS ?= -g -static
+CFLAGS ?= -flto -ffat-lto-objects -march=native --std=c89 -g -Ideps/ -Isrc/ -Wall -Wextra -Wpedantic -Wconversion -Wformat-security -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-prototypes -Wnull-dereference -Wfloat-equal -Wundef -Wpointer-arith -Wbad-function-cast -Wlogical-op -Wmissing-braces -Wcast-align -Wstrict-overflow=5 -ftrapv
+LDFLAGS ?= -flto -g -static
+
+BUILD = build_$(CC)
 
 prefix ?= /usr/local
 exec_prefix ?= $(prefix)
@@ -21,24 +23,25 @@ libdir ?= $(exec_prefix)/lib
 
 all: $(EXE) $(LIB)
 
-$(EXE): build/main.o $(LIB)
+$(EXE): $(BUILD)/main.o $(LIB)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 $(LIB): $(OBJECTS)
 	ar rcs $@ $^
 
-build:
-	mkdir build/
+$(BUILD):
+	mkdir $(BUILD)/
 
-build/%.o: src/%.c | build
+$(BUILD)/%.o: src/%.c | $(BUILD)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ -c $<
 
 clean:
 	-rm $(EXE)
-	-rm -r build/
+	-rm $(LIB)
+	-rm -r $(BUILD)/
 
 TAGS: $(SRCS)
-	etags $^
+	ctags --output-format=etags $^
 
 install: $(EXE) $(LIB)
 	mkdir -p $(DESTDIR)$(bindir) $(DESTDIR)$(libdir) $(DESTDIR)$(includedir)
