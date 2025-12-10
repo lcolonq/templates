@@ -1,6 +1,5 @@
 SRCS :=
 OBJECTS := $(SRCS:src/%.c=build/%.o)
-HEADERS := $(wildcard src/*.h)
 EXE := foo
 LIB := libcolonq-foo.a
 
@@ -47,7 +46,7 @@ install: $(EXE) $(LIB)
 	mkdir -p $(DESTDIR)$(bindir) $(DESTDIR)$(libdir) $(DESTDIR)$(includedir)
 	install $(EXE) $(DESTDIR)$(bindir)/$(EXE)
 	install $(LIB) $(DESTDIR)$(libdir)/$(LIB)
-	install $(HEADERS) $(DESTDIR)$(includedir)
+	cp -r include/* $(DESTDIR)$(includedir)
 
 check-syntax: TAGS
 	gcc $(CFLAGS) -fsyntax-only $(CHK_SOURCES)
