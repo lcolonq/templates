@@ -48,14 +48,14 @@ impl teleia::state::Game for Game {
     fn render(&mut self, ctx: &context::Context, st: &mut state::State) -> Erm<()> {
         ctx.clear();
         self.assets.font.render_text(
-            ctx,
+            ctx, st,
             &glam::Vec2::new(0.0, 0.0),
             "hello computer",
         );
         st.bind_2d(ctx, &self.assets.shader_flat);
         self.assets.texture_test.bind(ctx);
         self.assets.shader_flat.set_position_2d(
-            ctx,
+            ctx, st,
             &glam::Vec2::new(40.0, 40.0),
             &glam::Vec2::new(16.0, 16.0),
         );
