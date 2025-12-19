@@ -51,4 +51,5 @@ install: $(EXE) $(LIB)
 check-syntax: TAGS
 	gcc $(CFLAGS) -fsyntax-only $(CHK_SOURCES)
 
+-include $(BUILD)/main.d
 -include $(OBJECTS:.o=.d)
